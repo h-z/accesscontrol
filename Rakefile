@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "accesscontrol"
   gem.homepage = "http://github.com/h-z/accesscontrol"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{simple accesscontrol for ActiveRecord::Base classes}
+  gem.description = %Q{ActiveRecord::Base classes can receive access_controlled or access_holder status. }
   gem.email = "hz@muszaki.info"
   gem.authors = ["HEGEDUS Zoltan"]
   # dependencies defined in Gemfile
@@ -36,7 +36,16 @@ RSpec::Core::RakeTask.new(:rcov) do |spec|
   spec.rcov = true
 end
 
-task :default => :spec
+require 'rake/testtask'
+Rake::TestTask.new(:test) do |test|
+    test.libs << 'lib' << 'test'
+    test.pattern = 'test/**/test_*.rb'
+    test.verbose = true
+end
+
+
+task :default => :test
+
 
 require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
