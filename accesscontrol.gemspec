@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{accesscontrol}
-  s.version = ""
+  s.version = "0.0.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["HEGEDUS Zoltan"]
@@ -23,6 +23,8 @@ Gem::Specification.new do |s|
     "LICENSE.txt",
     "README.rdoc",
     "Rakefile",
+    "VERSION",
+    "accesscontrol.gemspec",
     "lib/accesscontrol.rb",
     "spec/accesscontrol_spec.rb",
     "spec/spec_helper.rb",
