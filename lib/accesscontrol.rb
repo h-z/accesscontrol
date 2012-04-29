@@ -20,13 +20,13 @@ module Accesscontrol
           end
         end
       end
-
       has_many :rules, :as => :subject
-
       include ControlledInstanceMethods
     end
 
     def access_holder
+      has_many :rules
+
       include HolderInstanceMethods
     end
   end
@@ -54,7 +54,7 @@ module Accesscontrol
     end
 
     def subjects
-      rules.collect {|rule| rule.subject }.compact
+      rules.collect {|rule| rule.subject.accesscontrol_proxy }.compact
     end
 
     # @param [ActiveRecord::Base] subject
@@ -91,4 +91,4 @@ module Accesscontrol
   end
 end
 
-# ActiveRecord::Base.send :include, Accesscontrol
+ActiveRecord::Base.send :include, Accesscontrol
