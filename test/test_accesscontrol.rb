@@ -31,7 +31,7 @@ def setup_db
         end
  
         create_table :rules do |t|
-            t.column :user_id, :integer
+            t.column :holder_id, :integer
             t.column :subject_type, :string
             t.column :subject_id, :integer
             t.column :creator_id, :integer
@@ -57,15 +57,6 @@ end
 class SmallThing <  ActiveRecord::Base
     belongs_to :small_subject
     access_controlled :proxy => :small_subject
-end
-
-class Rule < ActiveRecord::Base
-  attr_accessible :creator_id, :subject_id, :subject_type, :user_id, :user, :subject, :creator
-  #belongs_to :user
-  belongs_to :subject, :polymorphic => true
-  belongs_to :user, :foreign_key => :user_id
-  belongs_to :creator, :class_name => User, :foreign_key => :creator_id
-
 end
 
 
@@ -99,6 +90,7 @@ class TestAccesscontrol < Test::Unit::TestCase
         end
 
         should "have access to Big" do
+           p  @big.holders
            assert_equal true, @joe.has_access?(@big)
         end
 
