@@ -31,6 +31,7 @@ module Accesscontrol
         def access_holder
             @@holder_class = self
             has_many :rules, :class_name => Accesscontrol::Rule, :foreign_key => :holder_id
+            has_many :created_rules, :class_name => Accesscontrol::Rule, :foreign_key => :creator_id
             Accesscontrol::Rule.module_eval do
                 belongs_to :holder, :foreign_key => :holder_id, :class_name => Accesscontrol::ClassMethods.holder_class
                 belongs_to :creator, :foreign_key => :creator_id, :class_name => Accesscontrol::ClassMethods.holder_class
@@ -49,12 +50,12 @@ module Accesscontrol
             accesscontrol_proxy.rules.collect {|rule| rule.holder }.compact.uniq
         end
 
-        # @param [User] user
+        # @param [ActiveRecord::Base] user
         def add_user(user)
             owner.grant(user, accesscontrol_proxy)
         end
 
-        # @param [User] user
+        # @param [ActiveRecord::Base] user
         def remove_user(user)
             owner.revoke(user, accesscontrol_proxy)
         end
@@ -76,7 +77,7 @@ module Accesscontrol
             subjects.include? subject.accesscontrol_proxy
         end
 
-        # @param [User] user
+        # @param [ActiveRecord::Base] user
         # @param [ActiveRecord::Base] subject
         def grant(user, subject)
             return nil unless owner?
@@ -87,7 +88,7 @@ module Accesscontrol
             user.rules
         end
 
-        # @param [User] user
+        # @param [ActiveRecord::Base] user
         # @param [ActiveRecord::Base] subject
         def revoke(user, subject)
             return nil unless owner?
