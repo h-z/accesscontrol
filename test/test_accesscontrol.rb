@@ -90,7 +90,6 @@ class TestAccesscontrol < Test::Unit::TestCase
         end
 
         should "have access to Big" do
-           p  @big.holders
            assert_equal true, @joe.has_access?(@big)
         end
 

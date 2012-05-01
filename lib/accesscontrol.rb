@@ -24,13 +24,13 @@ module Accesscontrol
                     end
                 end
             end
-            has_many :rules, :as => :subject, :class_name => 'Accesscontrol::Rule' 
+            has_many :rules, :as => :subject, :class_name => Accesscontrol::Rule
             include ControlledInstanceMethods
         end
 
         def access_holder
             @@holder_class = self
-            has_many :rules, :class_name => 'Accesscontrol::Rule', :foreign_key => :holder_id
+            has_many :rules, :class_name => Accesscontrol::Rule, :foreign_key => :holder_id
             Accesscontrol::Rule.module_eval do
                 belongs_to :holder, :foreign_key => :holder_id, :class_name => Accesscontrol::ClassMethods.holder_class
                 belongs_to :creator, :foreign_key => :creator_id, :class_name => Accesscontrol::ClassMethods.holder_class
@@ -67,7 +67,6 @@ module Accesscontrol
         end
 
         def subjects
-            []
             rules.collect {|rule| rule.subject.accesscontrol_proxy }.compact
         end
 
