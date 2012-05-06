@@ -18,7 +18,9 @@ module Accesscontrol
                     self
                 else
                     if self.respond_to?(configuration[:proxy])
-                        self.send(configuration[:proxy]).accesscontrol_proxy
+                        unless self.send(configuration[:proxy]).nil?
+                            self.send(configuration[:proxy]).accesscontrol_proxy
+                        end
                     else
                         self
                     end
